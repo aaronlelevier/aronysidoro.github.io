@@ -1,1 +1,77 @@
-Hello World
+<!doctype html>
+<html ng-app="Demo">
+<head>
+	<meta charset="utf-8" />
+
+	<title>
+		Using Scope.$watch() To Watch Functions In AngularJS
+	</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+</head>
+<body ng-controller="AppController">
+	<div class="container">
+		<h1>
+			Using Scope.$watch() To Watch Functions In AngularJS
+		</h1>
+
+		<h4>Value: {{ calc_volume() }}</h4>
+		<input ng-model="volume" ng-init="">
+
+	</div>
+	<!-- Load scripts. -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+	<script type="text/javascript">
+
+		// Create an application module for our demo.
+		var app = angular.module( "Demo", [] );
+
+
+		// -------------------------------------------------- //
+		// -------------------------------------------------- //
+
+
+		// I control the root of the application.
+		app.controller(
+			"AppController",
+			function( $scope, $interpolate ) {
+
+				$scope.prices = [
+					{
+						'tier': 1,
+						'price': 1
+					},
+					{
+						'tier': 2,
+						'price': 4
+					}
+				];
+
+				// Basic `forEach` example on an Object
+				angular.forEach($scope.prices, function(price) {
+					console.log(price.tier, price.price);
+				});
+
+				// Example of how to use `$watch` and `forEach` on a calculated Object
+				$scope.volume = "";
+				$scope.calc_volume = function(value) {
+					var v = value ? value : $scope.volume * 2;
+					angular.forEach($scope.prices, function(price) {
+						v += price.price;
+					});
+					return v;
+				}
+				$scope.$watch(
+					'volume',
+					function(newValue) {
+						return newValue;
+				});
+
+			}
+		);
+
+	</script>
+
+</body>
+</html>
